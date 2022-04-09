@@ -14,14 +14,15 @@ class UsersApiService {
      */
     async getToken() {
         try {
-            token = await axios.post(AUTH_URL, {}, {
+            let response = await axios.get(AUTH_URL, {
                 //type username and password here
                 auth: {
                     username: '',
                     password: ''
                 }
             });
-            return token.OperationResult.SecurityToken
+            TOKEN =  response.request._headers.authorization
+            return TOKEN
 
         } catch (err) {
             console.log(err);
@@ -33,11 +34,10 @@ class UsersApiService {
      *  This function get the user from url one 
      */
     async getUser() {
+        if (TOKEN === undefined) {
+            TOKEN = await this.getToken();
+        }
         try {
-            if (TOKEN === undefined) {
-                TOKEN = await this.getToken();
-            }
-
             let userData = await axios.get(URL_1, {
                 headers: {
                     'Authorization': TOKEN

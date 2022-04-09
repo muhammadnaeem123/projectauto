@@ -4,7 +4,8 @@ const UserApiService = require("./services/users.service");
  * Calling get user data api
  */
 UserApiService.getUser()
-    .then(user => {
+    .then(response => {
+        let user = response.data.User
 
         // This is the user data
         let userData = {
@@ -18,9 +19,14 @@ UserApiService.getUser()
             c_InmyAccess: user.c_InmyAccess
         }
 
+        console.log(userData)
+
         /**
         * Calling create user api
         */
+
+        /*
+
         UserApiService.postUser(userData)
             .then(data => {
                 // Here we output the response from post user api
@@ -28,7 +34,7 @@ UserApiService.getUser()
 
             })
             .catch(err => console.log(err))
-
+        */
     })
     .catch(err => console.log(err));
 
